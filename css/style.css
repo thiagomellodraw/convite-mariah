@@ -1,0 +1,1756 @@
+/* ==========================================================================
+   STYLE.CSS - Design System e Visual Premium Fundo do Mar
+   Desenvolvido para o Convite de 15 Anos de Mariah Mello
+   ========================================================================== */
+
+/* Importação de Fontes Premium */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap');
+
+/* Variáveis do Design System */
+:root {
+    --color-blue-light: #38C2BD;  /* Turquesa vivo (água rasa) */
+    --color-blue-mid: #087A76;    /* Teal escuro (profundidades) */
+    --color-blue-deep: #0A3F3D;   /* Azul teal-navy profundo para títulos */
+    --color-blue-dark: #FAF6F2;   /* Fundo principal areia pêssego bem claro */
+    --color-sand-beige: #F7D6C8;  /* Areia pêssego suave/blush */
+    --color-sand-gold: #B58E77;   /* Areia tan/bege bronze para subtítulos */
+    --color-gold-bright: #D3A88E; /* Ouro areia/tan quente */
+    --color-white: #FFFFFF;
+    --color-text-main: #123C3A;   /* Texto principal verde teal-navy escuro */
+    --color-text-muted: #758D8B;  /* Texto secundário cinza sage/teal */
+    
+    --glass-bg: rgba(255, 255, 255, 0.72); /* Vidro claro levemente translúcido */
+    --glass-border: rgba(56, 194, 189, 0.25); /* Borda turquesa delicada */
+    --glass-shadow: 0 12px 30px rgba(10, 63, 61, 0.06);
+    --glass-glow: 0 0 20px rgba(56, 194, 189, 0.2);
+    
+    --font-heading: 'Cinzel', serif;
+    --font-script: 'Great Vibes', cursive;
+    --font-body: 'Montserrat', sans-serif;
+    
+    --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    --transition-fast: all 0.2s ease-in-out;
+}
+
+/* Reset e Configurações Globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-blue-dark);
+    color: var(--color-text-main);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Scrollbar Customizado Premium */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-blue-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-blue-mid), var(--color-sand-gold));
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-blue-light);
+}
+
+
+
+/* Conteúdo Principal sobre o Canvas */
+main {
+    position: relative;
+    z-index: 2;
+}
+
+/* Efeito de Parallax / Degradê de Fundo */
+.bg-gradient-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        #D2EFF1 0%,   /* Turquesa cristalino da praia */
+        #FAF6F2 45%,  /* Areia pêssego clara */
+        #F4E7DF 75%,  /* Areia quente */
+        #EAD8CD 100%  /* Areia bronze tan */
+    );
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   1. EXPERIÊNCIA DE ABERTURA (OVERLAY DE ENTRADA)
+   ========================================================================== */
+#opening-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #FAF6F2 0%, #EAD8CD 100%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1.5s ease-out;
+}
+
+#opening-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Concha e Pérola */
+.shell-wrapper {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+    perspective: 1000px;
+}
+
+.shell-container {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Desenho da concha (partes superior e inferior) */
+.shell-part {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: bottom center;
+}
+
+.shell-bottom {
+    z-index: 10;
+    transform: rotateX(0deg);
+}
+
+.shell-top {
+    z-index: 12;
+    transform: rotateX(0deg);
+}
+
+/* Quando aberta */
+.shell-container.opened .shell-top {
+    transform: rotateX(-115deg) translateZ(20px);
+}
+
+.shell-container.opened .shell-bottom {
+    transform: rotateX(15deg);
+}
+
+/* Pérola Luminosa */
+.opening-pearl {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background: radial-gradient(circle at 30% 30%, #ffffff 0%, #e8dcc5 50%, #aee6f9 100%);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0;
+    z-index: 11;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 
+                0 0 30px rgba(174, 230, 249, 0.6);
+    transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.5s ease-out;
+}
+
+.shell-container.opened .opening-pearl {
+    transform: translate(-50%, -100%) scale(1.6);
+    opacity: 1;
+    animation: pearlPulse 2s infinite ease-in-out alternate;
+}
+
+/* Brilho da Pérola Expandindo */
+#pearl-glow-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(210,239,241,0.95) 50%, rgba(250,246,242,1) 100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9998;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#pearl-glow-overlay.active {
+    opacity: 1;
+}
+
+/* Container da imagem de fundo no brilho */
+.pearl-glow-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+    pointer-events: none;
+}
+
+.pearl-glow-image {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    border-radius: 0;
+    opacity: 0;
+    transform: scale(1.05);
+    filter: blur(10px) brightness(1.1);
+    transition: opacity 2.5s cubic-bezier(0.25, 1, 0.5, 1) 0.4s, 
+                transform 3s cubic-bezier(0.25, 1, 0.5, 1) 0.4s, 
+                filter 2.5s cubic-bezier(0.25, 1, 0.5, 1) 0.4s;
+}
+
+#pearl-glow-overlay.active .pearl-glow-image {
+    opacity: 0.16; /* Opacidade sutil para cobrir o fundo da tela inteira elegantemente */
+    transform: scale(1);
+    filter: blur(0) brightness(1);
+}
+
+/* Nome da Debutante na Abertura (Wrapper) */
+#opening-debutante-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    opacity: 0;
+    transform: scale(0.8);
+    filter: blur(10px);
+    transition: opacity 1.5s ease-out, transform 2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.5s ease-out;
+    z-index: 9999;
+}
+
+#opening-debutante-name.visible {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+}
+
+#opening-debutante-name h2 {
+    font-family: var(--font-script);
+    font-size: 5.5rem;
+    color: var(--color-blue-deep);
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.6), 
+                 0 0 35px rgba(174, 230, 249, 0.8);
+    font-weight: normal;
+    line-height: 1;
+}
+
+.opening-debutante-age {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--color-sand-gold);
+    text-shadow: 0 1px 5px rgba(255, 255, 255, 0.6);
+    margin-top: 5px;
+}
+
+/* Botão Entrar */
+.btn-gold-outline {
+    background: transparent;
+    color: var(--color-blue-deep);
+    border: 1px solid var(--color-sand-gold);
+    padding: 14px 35px;
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 0 15px rgba(197, 168, 128, 0.1);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    z-index: 50;
+}
+
+.btn-gold-outline:hover {
+    color: var(--color-white);
+    background-color: var(--color-blue-deep);
+    box-shadow: 0 0 25px rgba(12, 35, 64, 0.3);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   CONTROLES FLUTUANTES (ÁUDIO)
+   ========================================================================== */
+#audio-toggle-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(7, 23, 41, 0.7);
+    border: 1px solid rgba(174, 230, 249, 0.3);
+    color: var(--color-blue-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(10px);
+    transition: var(--transition-smooth);
+}
+
+#audio-toggle-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--color-sand-beige);
+    color: var(--color-sand-beige);
+}
+
+/* Pulsação quando tocando */
+#audio-toggle-btn.playing::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid var(--color-blue-light);
+    animation: ripple 1.5s infinite ease-out;
+    opacity: 0;
+}
+
+/* ==========================================================================
+   ESTILOS DE SEÇÃO COMUNS E REVEAL ANIMATIONS
+   ========================================================================== */
+section {
+    padding: 100px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    text-align: center;
+    font-size: 2.2rem;
+    letter-spacing: 4px;
+    color: var(--color-blue-deep);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.section-subtitle {
+    font-family: var(--font-script);
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--color-sand-gold);
+    margin-bottom: 50px;
+}
+
+/* Elementos animados no Scroll (Reveal) */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    filter: blur(5px);
+    transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), 
+                transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), 
+                filter 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+/* Efeito Glassmorphism dos Cards */
+.glass-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition-smooth);
+}
+
+.glass-panel:hover {
+    border-color: rgba(174, 230, 249, 0.3);
+    box-shadow: var(--glass-shadow), var(--glass-glow);
+}
+
+/* ==========================================================================
+   2. SEÇÃO HERO
+   ========================================================================== */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding-top: 80px;
+    padding-bottom: 120px;
+    z-index: 10;
+}
+
+.hero-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 60px;
+    padding: 0 20px;
+}
+
+.hero-content {
+    flex: 1.2;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.hero-logo-detail {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 25px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: var(--transition-smooth);
+}
+
+.hero-content .hero-logo-detail {
+    align-self: flex-start;
+}
+
+.hero-title-celebration {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    letter-spacing: 8px;
+    color: var(--color-sand-gold);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: var(--transition-smooth);
+    transition-delay: 0.2s;
+}
+
+.hero-name {
+    font-family: var(--font-script);
+    font-size: 5.5rem;
+    color: var(--color-blue-deep);
+    text-shadow: 0 0 10px rgba(174, 230, 249, 0.3), 
+                 0 0 20px rgba(255, 255, 255, 0.8);
+    margin-bottom: 25px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: var(--transition-smooth);
+    transition-delay: 0.4s;
+    line-height: 1.1;
+}
+
+.hero-details-box {
+    margin-top: 10px;
+    padding: 20px 0;
+    width: 100%;
+    border-top: 1px solid rgba(179, 149, 106, 0.3);
+    border-bottom: 1px solid rgba(179, 149, 106, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: var(--transition-smooth);
+    transition-delay: 0.6s;
+}
+
+.hero-date {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+    color: var(--color-sand-gold);
+    margin-bottom: 5px;
+}
+
+.hero-time-location {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: var(--color-text-main);
+    text-transform: uppercase;
+}
+
+/* Coluna da Imagem */
+.hero-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-portrait-frame {
+    position: relative;
+    width: 320px;
+    height: 440px;
+    border-radius: 160px; /* Portal oval */
+    border: 3px double var(--color-sand-gold);
+    overflow: hidden;
+    box-shadow: 0 0 35px rgba(174, 230, 249, 0.2), var(--glass-shadow);
+    padding: 10px;
+    background: var(--color-blue-deep);
+    opacity: 0;
+    transform: scale(0.95) translateY(30px);
+    transition: var(--transition-smooth);
+    transition-delay: 0.8s;
+    animation: floatImage 6s infinite ease-in-out;
+}
+
+/* Moldura de Pérolas Virtuais no Hero */
+.hero-portrait-frame::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 2px dotted rgba(255, 255, 255, 0.6);
+    border-radius: 155px;
+    pointer-events: none;
+}
+
+.hero-portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 150px;
+    filter: brightness(0.95);
+}
+
+/* Gatilho da animação do Hero no carregamento */
+.hero-section.animate-in .hero-logo-detail {
+    opacity: 1;
+    transform: translateY(0);
+}
+.hero-section.animate-in .hero-title-celebration {
+    opacity: 1;
+    transform: translateY(0);
+}
+.hero-section.animate-in .hero-name {
+    opacity: 1;
+    transform: scale(1);
+}
+.hero-section.animate-in .hero-details-box {
+    opacity: 1;
+    transform: translateY(0);
+}
+.hero-section.animate-in .hero-portrait-frame {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--color-blue-light);
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.scroll-indicator i {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    animation: bounceWave 2s infinite;
+}
+
+/* ==========================================================================
+   3. CONTAGEM REGRESSIVA
+   ========================================================================== */
+.countdown-section {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.countdown-card {
+    width: 120px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    box-shadow: var(--glass-shadow);
+}
+
+.countdown-value {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    color: var(--color-blue-deep);
+    font-weight: 600;
+}
+
+.countdown-label {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-sand-gold);
+    margin-top: 5px;
+}
+
+.event-started-text {
+    font-family: var(--font-heading);
+    color: var(--color-sand-beige);
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+}
+
+/* ==========================================================================
+   4. HISTÓRIA DA ANIVERSARIANTE (HISTÓRIA COM IMAGEM DE FUNDO)
+   ========================================================================== */
+#story {
+    position: relative;
+    z-index: 2;
+}
+
+.story-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.story-text {
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.48); /* Painel de vidro sutil para excelente legibilidade */
+    padding: 45px 40px;
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 15px 35px rgba(10, 63, 61, 0.03);
+}
+
+.story-paragraph {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--color-text-main);
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+.story-paragraph:last-child {
+    margin-bottom: 0;
+}
+
+.story-paragraph strong {
+    color: var(--color-sand-gold);
+    font-weight: 600;
+}
+
+
+/* ==========================================================================
+   5. GALERIA INTERATIVA
+   ========================================================================== */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.gallery-item-card {
+    height: 350px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    box-shadow: var(--glass-shadow);
+}
+
+.gallery-item-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(7, 23, 41, 0.85) 0%, rgba(174, 230, 249, 0.1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 25px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.gallery-overlay h4 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: var(--color-sand-beige);
+    transform: translateY(20px);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.gallery-overlay p {
+    font-size: 0.75rem;
+    color: var(--color-blue-light);
+    letter-spacing: 1px;
+    margin-top: 5px;
+    text-transform: uppercase;
+    transform: translateY(20px);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.1s;
+}
+
+/* Hover Efeitos Galeria */
+.gallery-item-card:hover img {
+    transform: scale(1.08);
+}
+
+.gallery-item-card:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-item-card:hover .gallery-overlay h4,
+.gallery-item-card:hover .gallery-overlay p {
+    transform: translateY(0);
+}
+
+/* Lightbox Modal */
+#lightbox-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(2, 11, 20, 0.95);
+    z-index: 99999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+#lightbox-modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+}
+
+#lightbox-caption {
+    font-family: var(--font-heading);
+    color: var(--color-sand-beige);
+    margin-top: 15px;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+#close-lightbox {
+    position: absolute;
+    top: -45px;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+#close-lightbox:hover {
+    color: var(--color-blue-light);
+}
+
+/* ==========================================================================
+   6. PROGRAMAÇÃO DO EVENTO
+   ========================================================================== */
+.program-timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 40px auto 0;
+    padding: 20px 0;
+}
+
+/* Linha Central Vertical */
+.program-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(to bottom, 
+        rgba(174, 230, 249, 0.1) 0%, 
+        rgba(174, 230, 249, 0.6) 20%, 
+        rgba(197, 168, 128, 0.6) 80%, 
+        rgba(197, 168, 128, 0.1) 100%
+    );
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 30px 40px;
+    box-sizing: border-box;
+}
+
+.timeline-item:nth-child(even) {
+    left: 50%;
+    text-align: left;
+}
+
+.timeline-item:nth-child(odd) {
+    left: 0;
+    text-align: right;
+}
+
+/* Círculo do Ícone */
+.timeline-icon-node {
+    position: absolute;
+    top: 30px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-blue-deep);
+    border: 2px solid var(--color-sand-gold);
+    box-shadow: 0 0 15px rgba(174, 230, 249, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-blue-light);
+    z-index: 5;
+}
+
+.timeline-item:nth-child(even) .timeline-icon-node {
+    left: -22px;
+}
+
+.timeline-item:nth-child(odd) .timeline-icon-node {
+    right: -22px;
+}
+
+.timeline-time {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: var(--color-sand-gold);
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.timeline-card {
+    padding: 20px;
+}
+
+.timeline-card h4 {
+    font-family: var(--font-heading);
+    color: var(--color-blue-deep);
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+}
+
+.timeline-card p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   7. TRANSPORTE DOS CONVIDADOS (DESTAQUE VISUAL)
+   ========================================================================== */
+.transport-card {
+    max-width: 750px;
+    margin: 30px auto;
+    padding: 40px;
+    border: 1px solid rgba(179, 149, 106, 0.45); /* Destaque Gold Escuro */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(232, 220, 197, 0.25) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Detalhe de Onda no canto superior */
+.transport-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(174, 230, 249, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.transport-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.transport-header i {
+    font-size: 2.2rem;
+    color: var(--color-blue-mid);
+}
+
+.transport-header h3 {
+    font-family: var(--font-heading);
+    letter-spacing: 2px;
+    font-size: 1.4rem;
+    color: var(--color-blue-deep);
+    text-transform: uppercase;
+}
+
+.transport-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.transport-info-box {
+    padding: 20px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(174, 230, 249, 0.25);
+}
+
+.transport-info-box h4 {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.transport-info-box p {
+    font-size: 0.85rem;
+    color: var(--color-text-main);
+}
+
+.transport-cta-container {
+    text-align: center;
+}
+
+.btn-blue-glow {
+    background: linear-gradient(135deg, var(--color-blue-mid), #3a86c8);
+    color: var(--color-white);
+    border: none;
+    padding: 15px 35px;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(95, 168, 211, 0.3);
+    transition: var(--transition-smooth);
+}
+
+.btn-blue-glow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(174, 230, 249, 0.5);
+    background: linear-gradient(135deg, var(--color-blue-light), var(--color-blue-mid));
+}
+
+/* ==========================================================================
+   8. CARDÁPIO
+   ========================================================================== */
+.menu-tabs-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.menu-tab {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(12, 35, 64, 0.15);
+    color: var(--color-text-main);
+    padding: 12px 25px;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: var(--transition-fast);
+}
+
+.menu-tab:hover {
+    color: var(--color-sand-gold);
+    border-color: var(--color-sand-gold);
+}
+
+.menu-tab.active {
+    background: var(--color-sand-beige);
+    color: var(--color-blue-deep);
+    border-color: var(--color-sand-beige);
+    box-shadow: 0 5px 15px rgba(232, 220, 197, 0.25);
+}
+
+.menu-contents {
+    position: relative;
+    min-height: 250px;
+}
+
+.menu-content-group {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.menu-content-group.active {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.menu-item-card {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    border-bottom: 1px dotted rgba(12, 35, 64, 0.2);
+    padding-bottom: 5px;
+}
+
+.menu-item-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    letter-spacing: 1px;
+    color: var(--color-blue-deep);
+}
+
+.menu-item-tag {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-blue-mid);
+}
+
+.menu-item-description {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   9. CONFIRMAÇÃO DE PRESENÇA (RSVP)
+   ========================================================================== */
+.rsvp-card {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 50px 40px;
+}
+
+.rsvp-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.rsvp-group-full {
+    grid-column: span 2;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-blue-deep);
+}
+
+.form-input {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1.5px solid rgba(181, 142, 119, 0.4);
+    padding: 12px 16px;
+    border-radius: 6px;
+    color: var(--color-text-main);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    transition: var(--transition-fast);
+}
+
+.form-input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.8;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-sand-gold);
+    box-shadow: 0 0 10px rgba(181, 142, 119, 0.2);
+}
+
+select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23B58E77'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+}
+
+/* Efeito de destaque dinâmico */
+.highlight-field {
+    border-color: var(--color-blue-light) !important;
+    background-color: rgba(56, 194, 189, 0.15) !important;
+}
+
+textarea.form-input {
+    resize: none;
+    height: 100px;
+}
+
+.btn-rsvp-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--color-sand-gold), #b3956a);
+    color: var(--color-blue-deep);
+    border: none;
+    padding: 15px;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: var(--transition-smooth);
+}
+
+.btn-rsvp-submit:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, var(--color-sand-beige), var(--color-sand-gold));
+    box-shadow: 0 8px 25px rgba(232, 220, 197, 0.3);
+}
+
+/* Modais de Sucesso do RSVP */
+.success-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(250, 246, 242, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 100000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.success-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.rsvp-success-card {
+    width: 90%;
+    max-width: 450px;
+    padding: 40px;
+    text-align: center;
+    background: var(--color-blue-dark);
+    border: 1.5px solid var(--color-sand-gold);
+    border-radius: 12px;
+    box-shadow: var(--glass-shadow), var(--glass-glow);
+    position: relative;
+    overflow: hidden;
+}
+
+.rsvp-success-card i.main-success-icon {
+    font-size: 4rem;
+    color: var(--color-blue-mid);
+    margin-bottom: 20px;
+    animation: scalePop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rsvp-success-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    color: var(--color-blue-deep);
+    margin-bottom: 12px;
+}
+
+.rsvp-success-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-main);
+    margin-bottom: 25px;
+}
+
+/* Partículas/Bolhas da explosão */
+.success-particle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(174,230,249,0.3) 100%);
+    border: 0.5px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: explodeParticle 1.5s forwards cubic-bezier(0.1, 0.8, 0.3, 1);
+}
+
+/* ==========================================================================
+   10. MAPA DO LOCAL
+   ========================================================================== */
+.map-card {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.map-wrapper {
+    width: 100%;
+    height: 380px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 25px;
+}
+
+.map-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%); /* Tema Marinho Escuro */
+}
+
+.map-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn-map-link {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(232, 220, 197, 0.3);
+    color: var(--color-sand-beige);
+    padding: 12px 28px;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.btn-map-link:hover {
+    background: var(--color-sand-beige);
+    color: var(--color-blue-deep);
+    border-color: var(--color-sand-beige);
+    box-shadow: 0 4px 15px rgba(232, 220, 197, 0.2);
+}
+
+/* ==========================================================================
+   11. RODAPÉ (FOOTER)
+   ========================================================================== */
+footer {
+    padding: 80px 20px;
+    background: linear-gradient(to bottom, transparent 0%, #F7D6C8 100%);
+    border-top: 1.5px solid var(--color-sand-gold);
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-quote {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto 25px;
+    color: var(--color-blue-deep);
+    letter-spacing: 1px;
+}
+
+.footer-signature {
+    font-family: var(--font-script);
+    font-size: 2.2rem;
+    color: var(--color-sand-gold);
+    margin-bottom: 30px;
+}
+
+.footer-decor {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.footer-text {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   12. PAINEL ADMIN OCULTO (MODAL)
+   ========================================================================== */
+.admin-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(2, 11, 20, 0.95);
+    z-index: 100001;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.admin-modal-overlay.active {
+    display: flex;
+}
+
+.admin-card {
+    width: 100%;
+    max-width: 1000px;
+    max-height: 90vh;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+
+.admin-header h3 {
+    font-family: var(--font-heading);
+    color: var(--color-sand-beige);
+    font-size: 1.5rem;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.admin-btn {
+    padding: 8px 16px;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-admin-close {
+    background: transparent;
+    color: var(--color-white);
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-admin-close:hover {
+    color: var(--color-blue-light);
+}
+
+.btn-csv {
+    background: var(--color-blue-mid);
+    color: var(--color-white);
+}
+
+.btn-clear {
+    background: #c84b31;
+    color: var(--color-white);
+}
+
+.admin-table-wrapper {
+    overflow-x: auto;
+    overflow-y: auto;
+    flex-grow: 1;
+    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    text-align: left;
+}
+
+.admin-table th, .admin-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-table th {
+    background-color: rgba(7, 23, 41, 0.8);
+    font-family: var(--font-heading);
+    color: var(--color-sand-gold);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    position: sticky;
+    top: 0;
+}
+
+.admin-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.badge {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.badge-yes {
+    background-color: rgba(174, 230, 249, 0.2);
+    color: var(--color-blue-light);
+    border: 0.5px solid var(--color-blue-light);
+}
+
+.badge-no {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================================================
+   ANIMAÇÕES E KEYFRAMES
+   ========================================================================== */
+@keyframes pearlPulse {
+    0% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 20px rgba(174, 230, 249, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 50px rgba(174, 230, 249, 0.8);
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+@keyframes bounceWave {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-8px);
+    }
+    60% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes floatImage {
+    0% {
+        transform: translateY(0px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 35px rgba(197, 168, 128, 0.25);
+    }
+    50% {
+        transform: translateY(-12px);
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 45px rgba(197, 168, 128, 0.35);
+    }
+    100% {
+        transform: translateY(0px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 35px rgba(197, 168, 128, 0.25);
+    }
+}
+
+@keyframes scalePop {
+    0% {
+        transform: scale(0);
+    }
+    90% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes explodeParticle {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.2);
+        opacity: 0;
+    }
+}
+
+/* ==========================================================================
+   MEDIA QUERIES (RESPONSIVIDADE COMPLETA)
+   ========================================================================== */
+
+/* Tablet & Layouts Médios */
+@media (max-width: 900px) {
+    .hero-wrapper {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .hero-content {
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-content .hero-logo-detail {
+        align-self: center;
+    }
+
+    .hero-name {
+        font-size: 4.5rem;
+    }
+
+    .hero-portrait-frame {
+        width: 260px;
+        height: 360px;
+        border-radius: 130px;
+    }
+
+    .hero-portrait-frame::after {
+        border-radius: 125px;
+    }
+
+    .story-text {
+        padding: 30px 20px;
+    }
+
+    .menu-content-group.active {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 50px;
+        padding-right: 20px;
+        text-align: left !important;
+    }
+
+    .timeline-item:nth-child(odd) {
+        left: 0;
+    }
+
+    .timeline-item:nth-child(even) {
+        left: 0;
+    }
+
+    .program-timeline::before {
+        left: 20px;
+    }
+
+    .timeline-icon-node {
+        left: -2px !important;
+    }
+}
+
+/* Mobile & Telas Pequenas */
+@media (max-width: 600px) {
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-subtitle {
+        font-size: 2.1rem;
+    }
+
+    .hero-name {
+        font-size: 4rem;
+    }
+
+    .hero-date {
+        font-size: 1.3rem;
+    }
+
+    .countdown-container {
+        gap: 12px;
+    }
+
+    .countdown-card {
+        width: 75px;
+        height: 100px;
+    }
+
+    .countdown-value {
+        font-size: 1.8rem;
+    }
+
+    .countdown-label {
+        font-size: 0.6rem;
+    }
+
+    .transport-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .transport-card {
+        padding: 25px 15px;
+    }
+
+    .rsvp-form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .rsvp-group-full {
+        grid-column: span 1;
+    }
+
+    .rsvp-card {
+        padding: 30px 15px;
+    }
+
+    .map-wrapper {
+        height: 280px;
+    }
+
+    .map-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-map-link {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .footer-quote {
+        font-size: 1.1rem;
+    }
+
+    #opening-debutante-name h2 {
+        font-size: 3.2rem;
+    }
+    .opening-debutante-age {
+        font-size: 0.85rem;
+        letter-spacing: 4px;
+    }
+}
