@@ -40,11 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // 3. Revelar nome da aniversariante no centro do brilho
             setTimeout(() => {
                 birthdayNameNode.classList.add('visible');
-            }, 800);
+            }, 300);
 
-            // 4. Fade out completo do overlay de abertura
+            // 4. Fade out completo do overlay de abertura e do brilho da pérola
             setTimeout(() => {
                 openingOverlay.classList.add('fade-out');
+                pearlGlowOverlay.classList.add('fade-out');
                 
                 // Habilitar rolagem na página principal
                 document.body.classList.remove('no-scroll');
@@ -58,11 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Limpar do DOM após fade
                 setTimeout(() => {
                     openingOverlay.style.display = 'none';
-                }, 1500);
+                    pearlGlowOverlay.style.display = 'none';
+                }, 1000);
 
-            }, 4200); // tempo de exibição do nome e transição
+            }, 1600); // tempo de exibição do nome e transição
 
-        }, 1500); // concha leva 1.5s para abrir e revelar pérola
+        }, 600); // concha leva 0.6s para abrir e revelar pérola
     });
 
     // Controlar botão flutuante de som

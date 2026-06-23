@@ -3,6 +3,10 @@
  * Desenvolvido para o Convite de Mariah Mello
  */
 
+// Insira aqui o link gerado pelo Google Apps Script (Web App URL) após a implantação
+// Exemplo: 'https://script.google.com/macros/s/AKfycbz.../exec'
+const GOOGLE_SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxaLFKOk4M9ulYzXKHqTBF81D1IU9wkPpp48gwgFUvmcr_M2shZfkYsLZaunTkx3skg/exec';
+
 document.addEventListener('DOMContentLoaded', () => {
     const rsvpForm = document.getElementById('rsvp-form');
     const rsvpSuccessModal = document.getElementById('rsvp-success-modal');
@@ -42,8 +46,25 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Confirmando...';
             submitBtn.disabled = true;
 
+            // Enviar para o Google Planilhas se a URL estiver configurada
+            if (GOOGLE_SHEETS_WEBAPP_URL) {
+                try {
+                    await fetch(GOOGLE_SHEETS_WEBAPP_URL, {
+                        method: 'POST',
+                        mode: 'no-cors', // Evita erro de CORS com o Apps Script Web App
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(rsvpData)
+                    });
+                    console.log('RSVP enviado com sucesso para o Google Planilhas!');
+                } catch (err) {
+                    console.error('Erro ao enviar para o Google Planilhas:', err);
+                }
+            }
+
             try {
-                // Tentar enviar para o servidor Express local
+                // Tentar enviar para o servidor Express local (caso esteja rodando local)
                 const response = await fetch('/api/rsvp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -53,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!response.ok) throw new Error('Falha no envio para o servidor');
                 console.log('RSVP salvo no servidor local!');
             } catch (err) {
-                console.log('Servidor local não respondendo, salvando apenas no LocalStorage...');
+                console.log('Servidor local não ativo ou erro no salvamento local.');
             }
 
             // Salvar no LocalStorage (sempre, como backup e funcionamento estático)
