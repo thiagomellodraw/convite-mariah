@@ -49,13 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
             // Enviar para o Google Planilhas se a URL estiver configurada
             if (GOOGLE_SHEETS_WEBAPP_URL) {
                 try {
+                    // Usar URLSearchParams para formatar os dados como um formulário tradicional.
+                    // Isso garante que o Google Apps Script receba as informações corretamente em 'no-cors' mode.
+                    const formData = new URLSearchParams();
+                    formData.append('name', rsvpData.name);
+                    formData.append('guests', rsvpData.guests);
+                    formData.append('phone', rsvpData.phone);
+                    formData.append('email', rsvpData.email);
+                    formData.append('useBus', rsvpData.useBus);
+                    formData.append('dietary', rsvpData.dietary);
+                    formData.append('message', rsvpData.message);
+
                     await fetch(GOOGLE_SHEETS_WEBAPP_URL, {
                         method: 'POST',
-                        mode: 'no-cors', // Evita erro de CORS com o Apps Script Web App
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(rsvpData)
+                        mode: 'no-cors',
+                        body: formData
                     });
                     console.log('RSVP enviado com sucesso para o Google Planilhas!');
                 } catch (err) {
